@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <AzureCredentials>DpeContentDev</AzureCredentials>
+    <AzureDeploymentLabel>WorkerRoleAccelerator.Cloud - 7/22/2011 3:39:03 AM</AzureDeploymentLabel>
+    <AzureSlot>Production</AzureSlot>
+    <AzureEnableWebDeploy>False</AzureEnableWebDeploy>
+    <AzureHostedServiceName>workeraccelerator</AzureHostedServiceName>
+    <AzureHostedServiceLabel>Worker Role Accelerator</AzureHostedServiceLabel>
+    <AzureEnableIntelliTrace>False</AzureEnableIntelliTrace>
+    <AzureStorageAccountName>workeraccspike</AzureStorageAccountName>
+    <AzureStorageAccountLabel>workeraccspike</AzureStorageAccountLabel>
+  </PropertyGroup>
+</Project>

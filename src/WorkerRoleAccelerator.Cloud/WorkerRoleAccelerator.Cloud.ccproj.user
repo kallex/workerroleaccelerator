@@ -13,5 +13,8 @@
     <DeploymentLabel>WorkerRoleAccelerator.Cloud - 7/22/2011 3:39:03 AM</DeploymentLabel>
     <DeploymentPromptBeforeDeleting>True</DeploymentPromptBeforeDeleting>
     <DeploymentIsExpanded>True</DeploymentIsExpanded>
+    <PackageProfile>Default</PackageProfile>
+    <PackageSolutionConfiguration>Release</PackageSolutionConfiguration>
+    <PackageEnableRemoteDesktop>False</PackageEnableRemoteDesktop>
   </PropertyGroup>
 </Project>

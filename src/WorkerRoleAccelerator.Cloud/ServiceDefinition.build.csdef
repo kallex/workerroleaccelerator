@@ -8,14 +8,13 @@
 
   **********************************************************************************************
 -->
-<ServiceDefinition name="WorkerRoleAcc" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition">
-  <WorkerRole name="WorkerRoleAccelerator.Core">
-    <Imports>
-      <Import moduleName="Diagnostics" />
-    </Imports>
+<ServiceDefinition name="WorkerRoleAcc" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition" schemaVersion="2012-05.1.7">
+  <WorkerRole name="WorkerRoleAccelerator.Core" vmsize="ExtraSmall">
+    <Imports></Imports>
     <ConfigurationSettings>
       <Setting name="DataConnectionString" />
       <Setting name="WorkerRoleEntryPointContainerName" />
+      <Setting name="StorageConnectionString" />
     </ConfigurationSettings>
     <LocalResources>
       <LocalStorage name="ConfigFiles" cleanOnRoleRecycle="true" sizeInMB="10" />

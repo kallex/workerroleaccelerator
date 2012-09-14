@@ -10,6 +10,9 @@
 
     public class WorkerRole : RoleEntryPoint
     {
+        bool GracefullyExited;
+        bool IsStopping;
+
         /// <summary>
         /// Worker Role Accelerator Run method. Called by Windows Azure after the role instance has been initialized.
         /// This method serves as the main thread of execution for the role.
@@ -22,7 +25,7 @@
 
             var loader = new WorkerRoleLoader();
 
-            while (true)
+            while (!IsStopping)
             {
                 Trace.TraceInformation("Worker Role Accelerator is Working");
 
@@ -30,6 +33,8 @@
 
                 Thread.Sleep(30000);
             }
+            loader.UnloadAppdomain();
+            GracefullyExited = true;
         }
 
         /// <summary>
@@ -46,15 +51,23 @@
             });
 
             // Start the Diagnostic Monitor
-            DiagnosticMonitorConfiguration dmc = DiagnosticMonitor.GetDefaultInitialConfiguration();
-            dmc.Logs.ScheduledTransferPeriod = TimeSpan.FromMinutes(1);
-            dmc.Logs.ScheduledTransferLogLevelFilter = LogLevel.Verbose;
-            DiagnosticMonitor.Start("Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString", dmc);
+            //DiagnosticMonitorConfiguration dmc = DiagnosticMonitor.GetDefaultInitialConfiguration();
+            //dmc.Logs.ScheduledTransferPeriod = TimeSpan.FromMinutes(1);
+            //dmc.Logs.ScheduledTransferLogLevelFilter = LogLevel.Verbose;
+            //DiagnosticMonitor.Start("Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString", dmc);
 
             // Set the maximum number of concurrent connections
             ServicePointManager.DefaultConnectionLimit = 12;
-
+            IsStopping = false;
             return base.OnStart();
+        }
+
+        public override void OnStop()
+        {
+            IsStopping = true;
+            while(GracefullyExited == false)
+                Thread.Sleep(1000);
+            base.OnStop();
         }
     }
 }

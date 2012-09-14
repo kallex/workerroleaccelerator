@@ -22,6 +22,7 @@
         private AppDomain pluginDomain;
         private CloudStorageAccount storageAccount;
         private CloudBlobClient blobStorage;
+        private ProxyRoleEntryPoint ActiveProxy;
 
         public WorkerRoleLoader()
         {
@@ -196,7 +197,7 @@
                 }
 
                 object[] args = new[] { containerName, entryPointAssemblyName };
-                var proxy = this.pluginDomain.CreateInstanceAndUnwrap(typeof(ProxyRoleEntryPoint).Assembly.FullName,
+                ActiveProxy = this.pluginDomain.CreateInstanceAndUnwrap(typeof(ProxyRoleEntryPoint).Assembly.FullName,
                                                                       typeof(ProxyRoleEntryPoint).FullName,
                                                                       false,
                                                                       BindingFlags.Default,
@@ -209,9 +210,9 @@
                 {
                     try
                     {
-                        if (proxy.OnStart())
+                        if (ActiveProxy.OnStart())
                         {
-                            proxy.Run();
+                            ActiveProxy.Run();
                         }
                     }
                     catch (AppDomainUnloadedException)
@@ -239,6 +240,9 @@
         {
             if (this.pluginDomain != null)
             {
+                // Give the worker graceful exit chance by calling OnStop
+                if(ActiveProxy != null)
+                    ActiveProxy.OnStop();
                 Trace.TraceInformation("Unloading AppDomain for plugin '{0}'.", AppDomainName);
                 AppDomain.Unload(this.pluginDomain);
                 this.pluginDomain = null;
