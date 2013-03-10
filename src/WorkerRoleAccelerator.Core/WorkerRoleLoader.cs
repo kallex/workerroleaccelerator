@@ -241,8 +241,15 @@
             if (this.pluginDomain != null)
             {
                 // Give the worker graceful exit chance by calling OnStop
-                if(ActiveProxy != null)
-                    ActiveProxy.OnStop();
+                try
+                {
+                    if (ActiveProxy != null)
+                        ActiveProxy.OnStop();
+                }
+                catch
+                {
+                    
+                }
                 Trace.TraceInformation("Unloading AppDomain for plugin '{0}'.", AppDomainName);
                 AppDomain.Unload(this.pluginDomain);
                 this.pluginDomain = null;
