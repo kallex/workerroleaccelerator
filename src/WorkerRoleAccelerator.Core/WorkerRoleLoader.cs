@@ -77,7 +77,7 @@
                 this.UnloadAppdomain();
                 this.Execute(containerName, assemblyName, configPath);
 
-                this.DeleteBlob(containerName, ExceptionFileName);
+                //this.DeleteBlob(containerName, ExceptionFileName);
                 this.LastModified = lastModified;
             }
         }
@@ -246,9 +246,10 @@
                     if (ActiveProxy != null)
                         ActiveProxy.OnStop();
                 }
-                catch
+                catch(Exception ex)
                 {
-                    
+                    var containerName = RoleEnvironment.GetConfigurationSettingValue("WorkerRoleEntryPointContainerName");
+                    this.Log(containerName, "Error on Proxy.OnStop: " + ex.ToString());
                 }
                 Trace.TraceInformation("Unloading AppDomain for plugin '{0}'.", AppDomainName);
                 AppDomain.Unload(this.pluginDomain);

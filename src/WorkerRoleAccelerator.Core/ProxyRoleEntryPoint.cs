@@ -9,6 +9,11 @@
 
     public class ProxyRoleEntryPoint : MarshalByRefObject
     {
+        public override object InitializeLifetimeService()
+        {
+            return null;
+        }
+
         private RoleEntryPoint workerRole;
 
         public ProxyRoleEntryPoint(string containerName, string entryPointAssemblyName)
