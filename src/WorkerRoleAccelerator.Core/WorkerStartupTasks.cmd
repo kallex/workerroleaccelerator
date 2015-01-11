@@ -1,5 +1,6 @@
 ﻿REM   *** Allow websites to define system.webServer/access. ***
-net use x: \\%CoreFileShareAccountName%.file.core.windows.net\tbcore /u:%CoreFileShareAccountName% %CoreFileShareAccountKey%  >> "%TEMP%\StartupLog.txt" 2>&1
+set >> "%~dp0\NetOutput.txt"
+net use x: \\%CoreFileShareAccountName%.file.core.windows.net\tbcore /u:%CoreFileShareAccountName% %CoreFileShareAccountKey%  >> "%~dp0\NetOutput.txt" 2>&1
 IF %ERRORLEVEL% EQU 183 DO VERIFY > NUL
 
 REM   If the ERRORLEVEL is not zero at this point, some other error occurred.
